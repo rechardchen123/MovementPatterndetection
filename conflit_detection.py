@@ -5,7 +5,7 @@ import numpy as np
 import pandas as pd
 import datetime
 import glob
-import algorithms
+from algorithms import clustering, cpa_calculation, save_data_into_file
 '''
 The confilit detection includes:
 1. Encounter clustering
@@ -45,3 +45,35 @@ after_trajectory_process = trajectory_process.drop(columns=['Record_Datetime'])
 print(after_trajectory_process.head(100))
 
 # clustering the data
+data = clustering(after_trajectory_process, time_day, time_hour, time_minute)
+
+#conflict detection accumulation
+conflict_mmsi = []
+conflict_lat = []
+conflict_lng = []
+conflict_heading = []
+conflict_speed = []
+for i in range(0, len(data)):
+    selected_data = data.loc[data['Minute'] == i]
+    # transfer the data into list for processing
+    mmsi = list(selected_data['MMSI'])
+    longitude = ['{:.3f}'.format(i) for i in list(selected_data['Longitude'])]
+    latitude = ['{:.3f}'.format(i) for i in list(selected_data['Latitude'])]
+    heading = list(selected_data['Heading'])
+    speed = list(selected_data['Speed'])
+    dcpa, tcpa = cpa_calculation(latitude[i], longitude[i], latitude[i + 1], longitude[i + 1], speed[i], speed[i + 1],
+                                 heading[i], heading[i + 1])
+    #using the tcpa and dcpa to detect the risk between two ships.
+    if tcpa < 0:
+        print("No conflict zones found!")
+    elif tcpa >=0:
+        conflict_mmsi.append(mmsi[i])
+        conflict_lat.append(latitude[i])
+        conflict_lng.append(longitude[i])
+        conflict_heading.append(heading[i])
+        conflict_speed.append(speed[i])
+
+# save the conflict zones into files
+save_data_into_file(conflict_mmsi, conflict_lng, conflict_lat, conflict_speed, conflict_heading)
+
+
