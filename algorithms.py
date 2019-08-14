@@ -4,8 +4,9 @@ import os
 import pandas as pd
 import numpy as np
 import datetime
-from math import sqrt, sin, cos, pi, acos, radians,asin, atan2
+from math import sqrt, sin, cos, pi, acos, radians, asin, atan2
 from geohelper import bearing
+
 EARTH_RADIUS = 6378.1
 n_mile = 1.852
 '''
@@ -65,7 +66,7 @@ def clustering(trajectory_data, time_day, time_hour, time_minute, dist):
     #                    saved_minute_list)
     # return saved_mmsi, saved_long_list, saved_lat_list, saved_speed_list, saved_heading_list, saved_minute_list
     data = save_data(saved_mmsi, saved_long_list, saved_lat_list, saved_speed_list, saved_heading_list,
-                               saved_minute_list)
+                     saved_minute_list)
     return data
 
 
@@ -88,7 +89,7 @@ def save_data_into_file(MMSI_list, Longitude_list, Latitude_list, Speed_list, He
                  'Speed': Speed_list,
                  'Heading': Heading_list}
     data = pd.DataFrame(save_dict)
-    data.to_csv('/home/rechardchen123/Documents/data/%s.csv'% conflict_trajectories, index=False)
+    data.to_csv('/home/rechardchen123/Documents/data/%s.csv' % conflict_trajectories, index=False)
 
 
 def cpa_calculation(x1, y1, x2, y2, v1, v2, heading1, heading2):
@@ -108,31 +109,33 @@ def cpa_calculation(x1, y1, x2, y2, v1, v2, heading1, heading2):
 
     alpha = heading2 - heading1
     if alpha > 180:
-        alpha-= 360
+        alpha -= 360
     elif alpha < -180:
         alpha += 360
 
-    #relative speed
-    relative_speed = sqrt(v2**2 + v1**2 - 2*v2*cos(alpha/180.0 * pi))
-    Q = acos((relative_speed**2 + v2**2 - v1**2)/(2*relative_speed*v2)) * 180.0 / pi
+    # relative speed
+    relative_speed = sqrt(v2 ** 2 + v1 ** 2 - 2 * v2 * cos(alpha / 180.0 * pi))
+    Q = acos((relative_speed ** 2 + v2 ** 2 - v1 ** 2) / (2 * relative_speed * v2)) * 180.0 / pi
 
-    #relative course
-    if alpha >0:
+    # relative course
+    if alpha > 0:
         relative_course = heading2 + Q
     else:
         relative_course = heading2 - Q
 
-    #relative bearing
+    # relative bearing
     bearing = bearing.initial_compass_bearing(x2, y2, x1, y1) - relative_course
-    DCPA = distance * sin(bearing*pi/180.0)
-    TCPA = distance * cos(bearing*pi/180.0)/relative_speed
+    DCPA = distance * sin(bearing * pi / 180.0)
+    TCPA = distance * cos(bearing * pi / 180.0) / relative_speed
     return DCPA, TCPA
 
-def hav(theta):
-    s = sin(theta/2)
-    return s*s
 
-def get_distance_hav(lat0,lng0, lat1,lng1):
+def hav(theta):
+    s = sin(theta / 2)
+    return s * s
+
+
+def get_distance_hav(lat0, lng0, lat1, lng1):
     '''
     Using haversine equation to calculate the distance between two points
     transfer the latitude and longitude into radian representation.
@@ -149,8 +152,6 @@ def get_distance_hav(lat0,lng0, lat1,lng1):
 
     dlng = fabs(lng0 - lng1)
     dlat = fabs(lat0 - lat1)
-    h = hav(dlat)+cos(lat0)*cos(lat1)*hav(dlng)
-    distance = 2*EARTH_RADIUS*asin(sqrt(h))
-    return distance/n_mile
-
-
+    h = hav(dlat) + cos(lat0) * cos(lat1) * hav(dlng)
+    distance = 2 * EARTH_RADIUS * asin(sqrt(h))
+    return distance / n_mile
