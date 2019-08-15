@@ -1,11 +1,9 @@
 # !/usr/bin/env python3
 # -*- coding: utf-8 -*
-import os
-import numpy as np
 import pandas as pd
-import datetime
-import glob
-from algorithms import clustering, cpa_calculation, save_data_into_file
+from algorithms import clustering
+from calculation_cpa import cpa_calculation
+from utils import save_data_into_file
 
 '''
 The confilit detection includes:
