@@ -36,7 +36,7 @@ def cpa_calculation(x1, y1, x2, y2, v1, v2, heading1, heading2):
         relative_course = heading2 - Q
 
     # relative bearing
-    bearing = bearing.initial_compass_bearing(x2, y2, x1, y1) - relative_course
-    DCPA = distance * sin(bearing * pi / 180.0)
-    TCPA = distance * cos(bearing * pi / 180.0) / relative_speed
+    bearing1 = bearing.initial_compass_bearing(x2, y2, x1, y1) - relative_course
+    DCPA = distance * sin(bearing1 * pi / 180.0)
+    TCPA = distance * cos(bearing1 * pi / 180.0) / relative_speed
     return DCPA, TCPA
