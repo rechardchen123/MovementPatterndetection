@@ -1,8 +1,8 @@
 # !/usr/bin/env python3
 # -*- coding: utf-8 -*
 import pandas as pd
-from algorithms import clustering
-from calculation_cpa import cpa_calculation
+from clustering_and_conflict_detection.encounter_clustering import clustering
+from clustering_and_conflict_detection.calculation_cpa import cpa_calculation
 from utils import save_data_into_file
 
 '''
@@ -52,6 +52,7 @@ conflict_lat = []
 conflict_lng = []
 conflict_heading = []
 conflict_speed = []
+conflict_minute = []
 for i in range(0, len(data)):
     selected_data = data.loc[data['Minute'] == i]
     # transfer the data into list for processing
@@ -60,6 +61,7 @@ for i in range(0, len(data)):
     latitude = ['{:.3f}'.format(i) for i in list(selected_data['Latitude'])]
     heading = list(selected_data['Heading'])
     speed = list(selected_data['Speed'])
+    minute = list(selected_data['Minute'])
     dcpa, tcpa = cpa_calculation(latitude[i], longitude[i], latitude[i + 1], longitude[i + 1], speed[i], speed[i + 1],
                                  heading[i], heading[i + 1])
     # using the tcpa and dcpa to detect the risk between two ships.
@@ -71,6 +73,13 @@ for i in range(0, len(data)):
         conflict_lng.append(longitude[i])
         conflict_heading.append(heading[i])
         conflict_speed.append(speed[i])
+        conflict_minute.append(minute[i])
 
-# save the conflict zones into files
-save_data_into_file(conflict_mmsi, conflict_lng, conflict_lat, conflict_speed, conflict_heading)
+# groupby the data by MMSI and save the conflict zones into files
+data1 = save_data_into_file(conflict_mmsi, conflict_lng, conflict_lat, conflict_speed, conflict_heading,
+                            conflict_minute)
+
+# groupby the data
+group_by_mmsi = data1.groupby(['MMSI'])
+for group in group_by_mmsi:
+    group[1].to_csv(str(group[0]) + '.csv', index=False)

@@ -1,7 +1,6 @@
 # !/usr/bin/env python3
 # -*- coding: utf-8 -*
-import pandas as pd
-from distance_transform import get_distance_hav
+from clustering_and_conflict_detection.distance_transform import get_distance_hav
 from utils import save_data
 
 '''

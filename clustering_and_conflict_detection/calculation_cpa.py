@@ -1,7 +1,7 @@
 # !/usr/bin/env python3
 # -*- coding: utf-8 -*
 from math import sqrt, sin, cos, pi, acos
-from distance_transform import get_distance_hav
+from clustering_and_conflict_detection.distance_transform import get_distance_hav
 from geohelper import bearing
 
 def cpa_calculation(x1, y1, x2, y2, v1, v2, heading1, heading2):

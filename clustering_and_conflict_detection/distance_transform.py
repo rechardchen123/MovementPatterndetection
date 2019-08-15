@@ -1,6 +1,5 @@
 # !/usr/bin/env python3
 # -*- coding: utf-8 -*
-from geohelper import bearing
 from math import sqrt, sin, cos, radians, asin, fabs
 
 EARTH_RADIUS = 6378.1
