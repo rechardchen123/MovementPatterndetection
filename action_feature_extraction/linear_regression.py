@@ -5,7 +5,7 @@ Linear regression with smoothing method to erase the noise.
 '''
 import glob
 import pandas as pd
-from utils import save_data
+from utils import save_data1
 
 
 def mean5_3(data, m):
@@ -28,6 +28,18 @@ def mean5_3(data, m):
         a = b.copy()
     return a
 
+def zero_centered(data):
+    '''
+    Zero-centered method to classify the movement into course unchanged, turn left, turn right
+    :param data: The heading series
+    :return: the zero-centered data
+    '''
+    data1 = []
+    mean1 = data.mean()
+    for i in data:
+        data1.append(data[i] - mean1)
+    return data1
+
 
 # read the conflict data into the model
 data = glob.glob()
@@ -38,10 +50,13 @@ for f in data:
     # get the heading series
     heading = read_file['Heading']
     after_regression_heading = mean5_3(heading, 10)
+    after_regression_heading1 = zero_centered(after_regression_heading)
     mmsi = list(read_file['MMSI'])
     lat = list(read_file['Latitude'])
     lng = list(read_file['Longitude'])
     speed = list(read_file['Speed'])
     minute = list(read_file['MInute'])
     # get a new dataframe
-    save_data(mmsi, lng, lat, speed, after_regression_heading, minute)
+    save_data1(mmsi, lng, lat, speed, after_regression_heading, minute, after_regression_heading1)
+
+
