@@ -1,8 +1,6 @@
 # !/usr/bin/env python3
 # -*- coding: utf-8 -*
-import os
 import pandas as pd
-
 
 def save_data(MMSI_list, Longitude_list, Latitude_list, Speed_list, Heading_list, Minute_list):
     save_dict = {'MMSI': MMSI_list,

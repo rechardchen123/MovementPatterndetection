@@ -19,20 +19,19 @@ are adopted to measure the maritime conflict behavior.
 pd.set_option('display.max_columns', None)
 pd.set_option('display.max_rows', None)
 # read ais data and get the distance and time parameters
-trajectory_process = pd.read_csv('/home/rechardchen123/Documents/data/dataset-ais-origin/drop_decimals_finish_drop.csv')
+trajectory_process = pd.read_csv('/home/rechardchen123/Documents/data/dataset-ais-origin/test.csv')
 
-observation_distance = int(input('please input the observation distance: '))
+observation_distance = float(input('please input the observation distance: '))
 time_day = int(input('please input the day: '))
 time_hour = int(input('please input the hour time: '))
 time_minute = int(input('please input the condition time (minutes): '))
 
 # read the data
 count_MMSI = 0
-
 for i in trajectory_process['MMSI'].duplicated():
     if i == False:
         count_MMSI = count_MMSI + 1
-print('total MMSI number is: %d' % count_MMSI)
+#print('total MMSI number is: %d' % count_MMSI)
 
 trajectory_process['Record_Datetime'] = pd.to_datetime(trajectory_process['Record_Datetime'])
 trajectory_process['Day'] = pd.to_datetime(trajectory_process['Record_Datetime']).dt.day
@@ -41,10 +40,9 @@ trajectory_process['Minute'] = pd.to_datetime(trajectory_process['Record_Datetim
 
 # delete the middle field
 after_trajectory_process = trajectory_process.drop(columns=['Record_Datetime'])
-print(after_trajectory_process.head(100))
 
 # clustering the data
-data = clustering(after_trajectory_process, time_day, time_hour, time_minute)
+data = clustering(after_trajectory_process, time_day, time_hour, time_minute, observation_distance)
 
 # conflict detection accumulation
 conflict_mmsi = []
@@ -54,16 +52,16 @@ conflict_heading = []
 conflict_speed = []
 conflict_minute = []
 for i in range(0, len(data)):
-    selected_data = data.loc[data['Minute'] == i]
+    selected_data = data.loc[data['Minute'] <= i] #setting the time explicit
     # transfer the data into list for processing
     mmsi = list(selected_data['MMSI'])
-    longitude = ['{:.3f}'.format(i) for i in list(selected_data['Longitude'])]
-    latitude = ['{:.3f}'.format(i) for i in list(selected_data['Latitude'])]
+    longitude = list(selected_data['Longitude'])
+    latitude = list(selected_data['Latitude'])
     heading = list(selected_data['Heading'])
     speed = list(selected_data['Speed'])
     minute = list(selected_data['Minute'])
-    dcpa, tcpa = cpa_calculation(latitude[i], longitude[i], latitude[i + 1], longitude[i + 1], speed[i], speed[i + 1],
-                                 heading[i], heading[i + 1])
+    dcpa, tcpa = cpa_calculation(latitude[i], longitude[i], latitude[i -1], longitude[i - 1], speed[i], speed[i - 1],
+                                 heading[i], heading[i - 1])
     # using the tcpa and dcpa to detect the risk between two ships.
     if tcpa < 0:
         print("No conflict zones found!")

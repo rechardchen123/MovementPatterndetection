@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*
 import os
 
-directory = ''
+directory = '/home/rechardchen123/Documents/data/data_after_processed_1'
 os.chdir(directory)
 cwd = os.getcwd()
 print('current working directory:' +cwd )
@@ -41,7 +41,7 @@ while True:
     if option == '1':
         deleteNullFile()
     elif option == '2':
-        minSize = int(input("minSize(k):"))  # 键盘输入的是字符串，需要强制转换成int类型
+        minSize = float(input("minSize(k):"))  # 键盘输入的是字符串，需要强制转换成int类型
         deleteBySize(minSize)
     elif option == 'q':
         print("quit !")

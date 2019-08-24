@@ -55,7 +55,7 @@ for f in data:
     lat = list(read_file['Latitude'])
     lng = list(read_file['Longitude'])
     speed = list(read_file['Speed'])
-    minute = list(read_file['MInute'])
+    minute = list(read_file['Minute'])
     # get a new dataframe
     save_data1(mmsi, lng, lat, speed, after_regression_heading, minute, after_regression_heading1)
 
