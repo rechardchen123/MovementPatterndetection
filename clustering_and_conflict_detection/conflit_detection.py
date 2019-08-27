@@ -21,7 +21,8 @@ are adopted to measure the maritime conflict behavior.
 OBSERVATION_CIRCLE = 0.4
 
 # read the data by hour
-read_data = glob.glob('/home/rechardchen123/Documents/data/data_resemble/test/groupby_hour/*.csv')
+read_data = glob.glob(
+    '/home/rechardchen123/Documents/data/data_resemble/test/groupby_hour/*.csv')
 for file in read_data:
     group = pd.read_csv(file)
     data = clustering(group, OBSERVATION_CIRCLE)
@@ -49,9 +50,9 @@ for file in read_data:
         dcpa, tcpa = cpa_calculation(latitude[i], longitude[i], latitude[i + 1], longitude[i + 1], speed[i],
                                      speed[i + 1], heading[i], heading[i + 1])
         # using the tcpa and dcpa to detect the risk between two ships.
-        if tcpa < 0.5:
+        if tcpa < 0.1:
             print("No conflict zones found %s" % str(i))
-        elif tcpa >= 0.5:
+        elif tcpa >= 0.1:
             conflict_mmsi.append(mmsi[i])
             conflict_lat.append(latitude[i])
             conflict_lng.append(longitude[i])

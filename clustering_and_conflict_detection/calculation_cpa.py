@@ -29,8 +29,10 @@ def cpa_calculation(x1, y1, x2, y2, v1, v2, heading1, heading2):
         # relative bearing
         alpha = relative_bearing(heading1, heading2)
         # relative speed
-        relative_speed = sqrt(v2 ** 2 + v1 ** 2 - 2 * v1 * v2 * cos(alpha / 180.0 * pi))
-        Q = acos((relative_speed ** 2 + v2 ** 2 - v1 ** 2) / (2 * relative_speed * v2)) * 180.0 / pi
+        relative_speed = sqrt(v2 ** 2 + v1 ** 2 - 2 *
+                              v1 * v2 * cos(alpha / 180.0 * pi))
+        Q = acos((relative_speed ** 2 + v2 ** 2 - v1 ** 2) /
+                 (2 * relative_speed * v2)) * 180.0 / pi
 
         # relative course
         if alpha > 0:
@@ -39,7 +41,8 @@ def cpa_calculation(x1, y1, x2, y2, v1, v2, heading1, heading2):
             relative_course = heading2 - Q
 
         # relative bearing
-        bearing1 = bearing.initial_compass_bearing(float(x2), float(y2), float(x1), float(y1)) - relative_course
+        bearing1 = bearing.initial_compass_bearing(
+            float(x2), float(y2), float(x1), float(y1)) - relative_course
         DCPA = distance * sin(bearing1 * pi / 180.0)
         TCPA = distance * cos(bearing1 * pi / 180.0) / relative_speed
         return DCPA, TCPA
