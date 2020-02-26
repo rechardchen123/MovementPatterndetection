@@ -33,9 +33,9 @@ def clustering(trajectory_data, dist):
     saved_heading_list = []
     saved_speed_list = []
     saved_minute_list = []
-    for i in range(0, len(Latitude_list)-1):
+    for i in range(0, len(Latitude_list) - 1):
         distance_two_points = get_distance_hav(Latitude_list[i], Longitude_list[i], Latitude_list[i + 1],
-                                                Longitude_list[i + 1])
+                                               Longitude_list[i + 1])
         if distance_two_points <= dist:
             saved_mmsi.append(MMSI_list[i])
             saved_lat_list.append(Latitude_list[i])
@@ -44,7 +44,7 @@ def clustering(trajectory_data, dist):
             saved_speed_list.append(Speed_list[i])
             saved_minute_list.append(Minute_list[i])
     data = save_data_into_file(saved_mmsi, saved_long_list, saved_lat_list, saved_speed_list, saved_heading_list,
-                         saved_minute_list)
+                               saved_minute_list)
     data = save_data(saved_mmsi, saved_long_list, saved_lat_list, saved_speed_list, saved_heading_list,
-                         saved_minute_list)
+                     saved_minute_list)
     return data

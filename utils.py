@@ -21,7 +21,7 @@ def save_data_into_file(MMSI_list, Longitude_list, Latitude_list, Speed_list, He
                  'Heading': Heading_list,
                  'Minute':Minute_list}
     data = pd.DataFrame(save_dict)
-    data.to_csv('/home/rechardchen123/Documents/data/data_resemble/test/clustering_trajectory.csv', index=False)
+    data.to_csv('/home/richardchen123/Documents/data/data_resemble/test/clustering_trajectory.csv', index=False)
 
 def save_data1(MMSI_list,Longitude_list, Latitude_list, Speed_list, Heading_list, Minute_list, zero_centerd_heading):
     save_dict = {'MMSI': MMSI_list,
@@ -32,9 +32,9 @@ def save_data1(MMSI_list,Longitude_list, Latitude_list, Speed_list, Heading_list
                  'Minute': Minute_list,
                  'Centered_heading':zero_centerd_heading}
     data = pd.DataFrame(save_dict)
-    data.to_csv('/home/rechardchen123/Documents/data/conflict_trajectory_centered.csv', index=False)
+    data.to_csv('/home/richardchen123/Documents/data/conflict_trajectory_centered.csv', index=False)
 
-def save_data_into_file1(MMSI_list, Longitude_list, Latitude_list, Speed_list, Heading_list, Minute_list, cpa, tcpa):
+def save_data_into_file1(file_name,MMSI_list, Longitude_list, Latitude_list, Speed_list, Heading_list, Minute_list, cpa, tcpa):
     save_dict = {'MMSI': MMSI_list,
                  'Longitude': Longitude_list,
                  'Latitude': Latitude_list,
@@ -44,4 +44,4 @@ def save_data_into_file1(MMSI_list, Longitude_list, Latitude_list, Speed_list, H
                  'CPA': cpa,
                  'TCPA': tcpa}
     data = pd.DataFrame(save_dict)
-    data.to_csv('/home/rechardchen123/Documents/data/data_resemble/test/conflict_trajectory.csv', index=False)
+    data.to_csv('/home/richardchen123/Documents/data/data_resemble/test/result_by_hour/%s.csv'%file_name, index=False)

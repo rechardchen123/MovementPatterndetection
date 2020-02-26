@@ -5,7 +5,7 @@ import pandas as pd
 from clustering_and_conflict_detection.encounter_clustering import clustering
 from clustering_and_conflict_detection.calculation_cpa import cpa_calculation
 from utils import save_data_into_file1
-
+import os
 '''
 The confilit detection includes:
 1. Encounter clustering
@@ -21,12 +21,16 @@ are adopted to measure the maritime conflict behavior.
 OBSERVATION_CIRCLE = 0.4
 
 # read the data by hour
-read_data = glob.glob(
-    '/home/rechardchen123/Documents/data/data_resemble/test/groupby_hour/*.csv')
+read_data = glob.glob('/home/richardchen123/Documents/data/data_resemble/test/groupby_hour/*.csv')
+
+# This is for the test and the address is the test file location.
+# read_data = glob.glob('/home/richardchen123/Documents/data/data_resemble/test/test1/*.csv')
+
 for file in read_data:
+    file_name = os.path.split(file)[-1].split('.')[0]
     group = pd.read_csv(file)
     data = clustering(group, OBSERVATION_CIRCLE)
-
+    print(file)
     # conflict detection accumulation
     conflict_mmsi = []
     conflict_lat = []
@@ -46,7 +50,8 @@ for file in read_data:
         heading = list(data['Heading'])
         speed = list(data['Speed'])
         minute = list(data['Minute'])
-        # add a judement for calculating the value error
+
+        # add a selection for calculating the value error
         dcpa, tcpa = cpa_calculation(latitude[i], longitude[i], latitude[i + 1], longitude[i + 1], speed[i],
                                      speed[i + 1], heading[i], heading[i + 1])
         # using the tcpa and dcpa to detect the risk between two ships.
@@ -63,12 +68,8 @@ for file in read_data:
             tcpa1.append(tcpa)
 
     # groupby the data by MMSI and save the conflict zones into files
-    data1 = save_data_into_file1(conflict_mmsi, conflict_lng, conflict_lat, conflict_speed, conflict_heading,
+    data1 = save_data_into_file1(file_name,conflict_mmsi, conflict_lng, conflict_lat, conflict_speed, conflict_heading,
                                  conflict_minute, cpa, tcpa1)
-    # # groupby the data
-    # if data1 == None:
-    #     print('There is no conflict data in the range!')
-    # else:
-    #     group_by_mmsi = data1.groupby(['MMSI'])
-    #     for group in group_by_mmsi:
-    #         group[1].to_csv(str(group[0]) + '.csv', index=False)
+
+
+
