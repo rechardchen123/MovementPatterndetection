@@ -7,8 +7,8 @@ from geohelper import bearing
 
 def relative_bearing(own_object_heading, object_bearing):
     '''
-    :param own_object_heading:
-    :param object_bearing:
+    :param own_object_heading: the first ship's heading
+    :param object_bearing: the second ship's heading
     :return:
     '''
     a = own_object_heading - object_bearing

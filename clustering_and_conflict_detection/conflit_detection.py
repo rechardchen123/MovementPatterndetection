@@ -6,6 +6,7 @@ from clustering_and_conflict_detection.encounter_clustering import clustering
 from clustering_and_conflict_detection.calculation_cpa import cpa_calculation
 from utils import save_data_into_file1
 import os
+
 '''
 The confilit detection includes:
 1. Encounter clustering
@@ -21,10 +22,8 @@ are adopted to measure the maritime conflict behavior.
 OBSERVATION_CIRCLE = 0.4
 
 # read the data by hour
-read_data = glob.glob('/home/richardchen123/Documents/data/data_resemble/test/groupby_hour/*.csv')
-
-# This is for the test and the address is the test file location.
-# read_data = glob.glob('/home/richardchen123/Documents/data/data_resemble/test/test1/*.csv')
+read_data = glob.glob(
+    r'C:\Users\ucesxc0\Documents\Repository-My programming and coding\data\data_resemble\test\groupby_hour\*.csv')
 
 for file in read_data:
     file_name = os.path.split(file)[-1].split('.')[0]
@@ -42,7 +41,7 @@ for file in read_data:
     tcpa1 = []
 
     for i in range(0, len(data) - 1):
-        # selected_data = data.loc[data['Minute'] <= i]
+        # todo(richard_chen): add a MMSI filter to sort the sequence...
         # transfer the data into list for processing
         mmsi = list(data['MMSI'])
         longitude = list(data['Longitude'])
@@ -68,8 +67,5 @@ for file in read_data:
             tcpa1.append(tcpa)
 
     # groupby the data by MMSI and save the conflict zones into files
-    data1 = save_data_into_file1(file_name,conflict_mmsi, conflict_lng, conflict_lat, conflict_speed, conflict_heading,
+    data1 = save_data_into_file1(file_name, conflict_mmsi, conflict_lng, conflict_lat, conflict_speed, conflict_heading,
                                  conflict_minute, cpa, tcpa1)
-
-
-
