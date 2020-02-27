@@ -1,6 +1,6 @@
 # !/usr/bin/env python3
 # -*- coding: utf-8 -*
-from clustering_and_conflict_detection.distance_transform import get_distance_hav
+from distance_transform import get_distance_hav
 from utils import save_data, save_data_into_file
 
 '''
@@ -10,6 +10,7 @@ The clustering algorithm is:
 3. compare any two data for the distance is less the collision detection distance.
 4. get the  encounter clustering 
 '''
+
 
 
 def clustering(trajectory_data, dist):

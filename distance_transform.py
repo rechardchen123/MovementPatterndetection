@@ -1,10 +1,9 @@
 # !/usr/bin/env python3
 # -*- coding: utf-8 -*
-from math import sqrt, sin, cos, radians, asin, fabs, pi, atan2
+from math import sqrt, sin, cos, radians, asin, fabs
 
 EARTH_RADIUS = 6378.1
 n_mile = 1.852
-
 
 def get_distance_hav(lat0, lng0, lat1, lng1):
     '''

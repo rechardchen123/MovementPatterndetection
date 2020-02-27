@@ -21,7 +21,8 @@ for group in groupby_day:
             str(name), str(group[0])), index=False)
 
 # group the data by hour
-trajectory_process = glob.glob('/home/richardchen123/Documents/data/data_resemble/test/*.csv')
+trajectory_process = glob.glob(
+    r'C:\Users\ucesxc0\Documents\Repository-My programming and coding\data\data_resemble\test\*.csv')
 for f in trajectory_process:
     read_file = pd.read_csv(f)
     # get the filename
@@ -29,5 +30,6 @@ for f in trajectory_process:
     groupby_hour = read_file.groupby(read_file['Hour'])
     for group in groupby_hour:
         group[1].to_csv(
-            '/home/richardchen123/Documents/data/data_resemble/test/groupby_hour/%s-%s.csv' % (filename, str(group[0])),
+            r'C:\Users\ucesxc0\Documents\Repository-My programming and coding\data\data_resemble\test\groupby_hour\%s-%s.csv' % (
+            filename, str(group[0])),
             index=False)

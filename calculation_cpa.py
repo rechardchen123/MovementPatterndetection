@@ -1,7 +1,7 @@
 # !/usr/bin/env python3
 # -*- coding: utf-8 -*
 from math import sqrt, sin, cos, pi, acos, fabs
-from clustering_and_conflict_detection.distance_transform import get_distance_hav
+from distance_transform import get_distance_hav
 from geohelper import bearing
 
 
