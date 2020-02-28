@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*
 import pandas as pd
 
+
 def save_data(MMSI_list, Longitude_list, Latitude_list, Speed_list, Heading_list, Minute_list):
     save_dict = {'MMSI': MMSI_list,
                  'Longitude': Longitude_list,
@@ -19,29 +20,34 @@ def save_data_into_file(MMSI_list, Longitude_list, Latitude_list, Speed_list, He
                  'Latitude': Latitude_list,
                  'Speed': Speed_list,
                  'Heading': Heading_list,
-                 'Minute':Minute_list}
+                 'Minute': Minute_list}
     data = pd.DataFrame(save_dict)
     data.to_csv('/home/richardchen123/Documents/data/data_resemble/test/clustering_trajectory.csv', index=False)
 
-def save_data1(MMSI_list,Longitude_list, Latitude_list, Speed_list, Heading_list, Minute_list, zero_centerd_heading):
+
+def save_data1(MMSI_list, Longitude_list, Latitude_list, Speed_list, Heading_list, Minute_list, zero_centerd_heading):
     save_dict = {'MMSI': MMSI_list,
                  'Longitude': Longitude_list,
                  'Latitude': Latitude_list,
                  'Speed': Speed_list,
                  'Heading': Heading_list,
                  'Minute': Minute_list,
-                 'Centered_heading':zero_centerd_heading}
+                 'Centered_heading': zero_centerd_heading}
     data = pd.DataFrame(save_dict)
     data.to_csv('/home/richardchen123/Documents/data/conflict_trajectory_centered.csv', index=False)
 
-def save_data_into_file1(file_name,MMSI_list, Longitude_list, Latitude_list, Speed_list, Heading_list, Minute_list, cpa, tcpa):
+
+def save_data_into_file1(file_name, MMSI_list, Longitude_list, Latitude_list, Speed_list, Heading_list, Minute_list,
+                         cpa, tcpa):
     save_dict = {'MMSI': MMSI_list,
                  'Longitude': Longitude_list,
                  'Latitude': Latitude_list,
                  'Speed': Speed_list,
                  'Heading': Heading_list,
-                 'Minute':Minute_list,
+                 'Minute': Minute_list,
                  'CPA': cpa,
                  'TCPA': tcpa}
     data = pd.DataFrame(save_dict)
-    data.to_csv('/home/richardchen123/Documents/data/data_resemble/test/result_by_hour/%s.csv'%file_name, index=False)
+    data.to_csv(
+        r'C:\Users\ucesxc0\Documents\Repository-My programming and coding\data\data_resemble\test\result_by_hour\%s.csv' % file_name,
+        index=False)

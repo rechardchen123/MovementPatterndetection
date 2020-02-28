@@ -36,9 +36,10 @@ for file in read_data:
     conflict_heading = []
     conflict_speed = []
     conflict_minute = []
-    cpa = []
+    dcpa1 = []
+    dcpa1.insert(0,0)
     tcpa1 = []
-    # todo(richard_chen): add a MMSI filter to sort the sequence... before calculate the cpa and tcpa.
+    tcpa1.insert(0,0)
     for i in range(0, len(data) - 1):
         # transfer the data into list for processing
         mmsi = list(data['MMSI'])
@@ -47,23 +48,24 @@ for file in read_data:
         heading = list(data['Heading'])
         speed = list(data['Speed'])
         minute = list(data['Minute'])
-
         # add a selection for calculating the value error
         dcpa, tcpa = cpa_calculation(latitude[i], longitude[i], latitude[i + 1], longitude[i + 1], speed[i],
                                      speed[i + 1], heading[i], heading[i + 1])
-        # using the tcpa and dcpa to detect the risk between two ships.
-        if tcpa < 0.1:
-            print("No conflict zones found %s" % str(i))
-        elif tcpa >= 0.1:
-            conflict_mmsi.append(mmsi[i])
-            conflict_lat.append(latitude[i])
-            conflict_lng.append(longitude[i])
-            conflict_heading.append(heading[i])
-            conflict_speed.append(speed[i])
-            conflict_minute.append(minute[i])
-            cpa.append(dcpa)
-            tcpa1.append(tcpa)
-    # group by the data through MMSI and save the conflict zones into files
-    data1 = save_data_into_file1(file_name, conflict_mmsi, conflict_lng, conflict_lat, conflict_speed, conflict_heading,
-                                 conflict_minute, cpa, tcpa1)
-
+        # using the tcpa and dcpa to detect the risk between two ship
+        dcpa1.append(dcpa)
+        tcpa1.append(tcpa)
+    data = save_data_into_file1(file_name, mmsi, longitude, latitude, speed, heading, minute, dcpa1, tcpa1)
+    #     if tcpa < 0.1:
+    #         print("No conflict zones found %s" % str(i))
+    #     elif tcpa >= 0.1:
+    #         conflict_mmsi.append(mmsi[i])
+    #         conflict_lat.append(latitude[i])
+    #         conflict_lng.append(longitude[i])
+    #         conflict_heading.append(heading[i])
+    #         conflict_speed.append(speed[i])
+    #         conflict_minute.append(minute[i])
+    #         cpa.append(dcpa)
+    #         tcpa1.append(tcpa)
+    # # group by the data through MMSI and save the conflict zones into files
+    # data1 = save_data_into_file1(file_name, conflict_mmsi, conflict_lng, conflict_lat, conflict_speed, conflict_heading,
+    #                              conflict_minute, cpa, tcpa1)

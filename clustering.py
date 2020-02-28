@@ -44,8 +44,7 @@ def clustering(trajectory_data, dist):
             saved_heading_list.append(Heading_list[i])
             saved_speed_list.append(Speed_list[i])
             saved_minute_list.append(Minute_list[i])
-    data = save_data_into_file(saved_mmsi, saved_long_list, saved_lat_list, saved_speed_list, saved_heading_list,
-                               saved_minute_list)
     data = save_data(saved_mmsi, saved_long_list, saved_lat_list, saved_speed_list, saved_heading_list,
                      saved_minute_list)
+
     return data
